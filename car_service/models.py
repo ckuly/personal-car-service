@@ -46,3 +46,22 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order {self.id} for {self.car.license_plate} on {self.date}"
+
+
+class Service(models.Model):
+    """Model representing a car."""
+    name = models.CharField('Service Name', max_length=100, help_text='Enter the service provided')
+    price = models.DecimalField('Price', max_digits=10, decimal_places=2, help_text='Enter the price of the service')
+
+    def __str__(self):
+        return f"{self.name} {self.price}"
+
+
+class OrderService(models.Model):
+    """Model representing a service for a specific order."""
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"Service {self.service.name} for Order {self.order.id}"
