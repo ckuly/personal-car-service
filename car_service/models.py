@@ -45,7 +45,7 @@ class Order(models.Model):
     )
 
     def __str__(self):
-        return f"Order {self.id} for {self.car.license_plate} on {self.date}"
+        return f"(Order ID: {self.id}) FOR (License Plate: {self.car_id.license_plate}) ON ({self.date})"
 
 
 class Service(models.Model):
@@ -64,4 +64,4 @@ class OrderService(models.Model):
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return f"Service {self.service.name} for Order {self.order.id}"
+        return f"(Service: {self.service.name}) FOR (Order ID: {self.order.id} FOR (Total Price: {self.service.price * self.quantity}EUR)"
