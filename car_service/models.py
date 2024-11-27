@@ -4,8 +4,8 @@ import uuid
 
 class CarModel(models.Model):
     """Model representing a car's model."""
-    brand = models.CharField('Brand', max_length=100)
-    model = models.CharField('Model', max_length=100)
+    brand = models.CharField('Brand', max_length=100, null=False)
+    model = models.CharField('Model', max_length=100, null=False)
 
     def __str__(self):
         return f"{self.brand} {self.model}"
@@ -14,10 +14,10 @@ class CarModel(models.Model):
 class Car(models.Model):
     """Model representing a car."""
     license_plate = models.CharField('License Plate', max_length=6,
-                                     help_text='Enter the license plate of a car (example: XXX000)')
-    car_model_id = models.ForeignKey('CarModel', on_delete=models.SET_NULL, null=True)
-    vin_code = models.CharField('VIN Code', max_length=17, help_text='Enter the VIN code (example: 4Y1SL65848Z411439)')
-    client = models.CharField('Client', max_length=100)
+                                     help_text='Enter the license plate of a car (example: XXX000)', null=False)
+    car_model_id = models.ForeignKey('CarModel', on_delete=models.CASCADE, null=True)
+    vin_code = models.CharField('VIN Code', max_length=17, help_text='Enter the VIN code (example: 4Y1SL65848Z411439)', null=False)
+    client = models.CharField('Client', max_length=100, null=False)
 
     def __str__(self):
         return f"{self.license_plate} ({self.client})"
@@ -25,9 +25,9 @@ class Car(models.Model):
 
 class Order(models.Model):
     """Model representing a Car Order"""
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID Car Order')
-    date = models.DateField('Will be accessible', null=True, blank=True)
-    car_id = models.ForeignKey('Car', on_delete=models.SET_NULL, null=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID Car Order', null=False)
+    date = models.DateField('Will be accessible', null=True)
+    car_id = models.ForeignKey('Car', on_delete=models.CASCADE, null=True)
 
     LOAN_STATUS = (
         ('p', 'Processing'),
@@ -50,8 +50,8 @@ class Order(models.Model):
 
 class Service(models.Model):
     """Model representing a car."""
-    name = models.CharField('Service Name', max_length=100, help_text='Enter the service provided')
-    price = models.DecimalField('Price', max_digits=10, decimal_places=2, help_text='Enter the price of the service')
+    name = models.CharField('Service Name', max_length=100, help_text='Enter the service provided', null=False)
+    price = models.IntegerField('Price', help_text='Enter the price of the service', null=False)
 
     def __str__(self):
         return f"{self.name} {self.price}"
@@ -59,9 +59,9 @@ class Service(models.Model):
 
 class OrderService(models.Model):
     """Model representing a service for a specific order."""
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True)
+    quantity = models.PositiveIntegerField(default=1, null=False)
 
     def __str__(self):
         return f"(Service: {self.service.name}) FOR (Order ID: {self.order.id} FOR (Total Price: {self.service.price * self.quantity}EUR)"
