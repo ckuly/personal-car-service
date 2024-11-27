@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 
 
 class CarModel(models.Model):
@@ -20,3 +21,28 @@ class Car(models.Model):
 
     def __str__(self):
         return f"{self.license_plate} ({self.client})"
+
+
+class Order(models.Model):
+    """Model representing a Car Order"""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID Car Order')
+    date = models.DateField('Will be accessible', null=True, blank=True)
+    car_id = models.ForeignKey('Car', on_delete=models.SET_NULL, null=True)
+
+    LOAN_STATUS = (
+        ('p', 'Processing'),
+        ('d', 'Delivered'),
+        ('t', 'Ready To Deliver'),
+        ('r', 'Reserved'),
+    )
+
+    status = models.CharField(
+        max_length=1,
+        choices=LOAN_STATUS,
+        blank=True,
+        default='p',
+        help_text='Order Status',
+    )
+
+    def __str__(self):
+        return f"Order {self.id} for {self.car.license_plate} on {self.date}"
