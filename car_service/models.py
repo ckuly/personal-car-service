@@ -58,7 +58,7 @@ class Order(models.Model):
         verbose_name_plural = "Orders"
 
     def __str__(self):
-        return f"(Order ID: {self.id}) FOR (License Plate: {self.car_id.license_plate}) ON ({self.date})"
+        return f"{self.id}"
 
 
 class Service(models.Model):
@@ -71,7 +71,7 @@ class Service(models.Model):
         verbose_name_plural = "Services"
 
     def __str__(self):
-        return f"{self.name} {self.price}"
+        return f"{self.name}"
 
 
 class OrderService(models.Model):
