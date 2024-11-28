@@ -18,8 +18,12 @@ class CarAdmin(admin.ModelAdmin):
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ('name', 'price')
 
+class CarModelAdmin(admin.ModelAdmin):
+    list_display = ('brand', 'model')
+    list_filter = ('brand',)
+
 admin.site.register(Car, CarAdmin)
-admin.site.register(CarModel)
+admin.site.register(CarModel, CarModelAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Service, ServiceAdmin)
 admin.site.register(OrderService)
