@@ -9,8 +9,20 @@ class OrderServiceInline(admin.TabularInline):
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'date', 'status', 'car_id')
+    list_display = ('id', 'date', 'status', 'car_id', 'car_brand', 'car_model')
     inlines = [OrderServiceInline]
+
+    def car_brand(self, obj):
+        """Returns the Car's Brand"""
+        return f"{obj.car_id.car_model_id.brand}"
+
+    car_brand.short_description = 'Car Brand'
+
+    def car_model(self, obj):
+        """Returns the Car's Brand"""
+        return f"{obj.car_id.car_model_id.model}"
+
+    car_model.short_description = 'Car Model'
 
 
 class CarAdmin(admin.ModelAdmin):
