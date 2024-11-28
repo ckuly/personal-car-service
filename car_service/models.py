@@ -53,6 +53,14 @@ class Order(models.Model):
         help_text='Order Status',
     )
 
+    def car_brand(self):
+        return self.car_id.car_model_id.brand
+    car_brand.short_description = 'Car Brand'
+
+    def car_model(self):
+        return self.car_id.car_model_id.model
+    car_model.short_description = 'Car Model'
+
     class Meta:
         verbose_name = "Order"
         verbose_name_plural = "Orders"
@@ -84,5 +92,9 @@ class OrderService(models.Model):
         verbose_name = "Order Service"
         verbose_name_plural = "Order Services"
 
+    def total_price(self):
+        return self.service.price * self.quantity
+    total_price.short_description = 'Total Price (EUR)'
+
     def __str__(self):
-        return f"(Service: {self.service.name}) FOR (Order ID: {self.order.id} FOR (Total Price: {self.service.price * self.quantity}EUR)"
+        return f"{self.service.name} {self.order.id}"
