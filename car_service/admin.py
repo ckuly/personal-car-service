@@ -11,7 +11,13 @@ class OrderServiceInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'date', 'status', 'car_id', 'car_brand', 'car_model')
     list_filter = ('date', 'status')
+    list_editable = ('date', 'status')
     inlines = [OrderServiceInline]
+
+    fieldsets = (
+        ('General', {'fields': ('id', 'car_id')}),
+        ('Availability', {'fields': ('status', 'date')}),
+    )
 
     def car_brand(self, obj):
         """Returns the Car's Brand"""
@@ -30,10 +36,12 @@ class CarAdmin(admin.ModelAdmin):
     list_display = ('license_plate', 'car_model_id', 'vin_code', 'client')
     list_filter = ('client', 'car_model_id')
     search_fields = ('license_plate', 'vin_code')
+    list_editable = ('client',)
 
 
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ('name', 'price')
+    list_editable = ('price',)
 
 
 class CarModelAdmin(admin.ModelAdmin):
@@ -43,6 +51,7 @@ class CarModelAdmin(admin.ModelAdmin):
 
 class OrderServiceAdmin(admin.ModelAdmin):
     list_display = ('order', 'service', 'quantity', 'total_price')
+    list_editable = ('service', 'quantity')
 
     def total_price(self, obj):
         """Calculate the total price for the service."""
