@@ -55,10 +55,12 @@ class Order(models.Model):
 
     def car_brand(self):
         return self.car_id.car_model_id.brand
+
     car_brand.short_description = 'Car Brand'
 
     def car_model(self):
         return self.car_id.car_model_id.model
+
     car_model.short_description = 'Car Model'
 
     class Meta:
@@ -94,6 +96,7 @@ class OrderService(models.Model):
 
     def total_price(self):
         return self.service.price * self.quantity
+
     total_price.short_description = 'Total Price (EUR)'
 
     def __str__(self):
