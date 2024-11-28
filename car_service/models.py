@@ -7,6 +7,10 @@ class CarModel(models.Model):
     brand = models.CharField('Brand', max_length=100, null=False)
     model = models.CharField('Model', max_length=100, null=False)
 
+    class Meta:
+        verbose_name = "Car Model"
+        verbose_name_plural = "Car Models"
+
     def __str__(self):
         return f"{self.brand} {self.model}"
 
@@ -16,11 +20,16 @@ class Car(models.Model):
     license_plate = models.CharField('License Plate', max_length=6,
                                      help_text='Enter the license plate of a car (example: XXX000)', null=False)
     car_model_id = models.ForeignKey('CarModel', on_delete=models.CASCADE, null=True)
-    vin_code = models.CharField('VIN Code', max_length=17, help_text='Enter the VIN code (example: 4Y1SL65848Z411439)', null=False)
+    vin_code = models.CharField('VIN Code', max_length=17, help_text='Enter the VIN code (example: 4Y1SL65848Z411439)',
+                                null=False)
     client = models.CharField('Client', max_length=100, null=False)
 
+    class Meta:
+        verbose_name = "Car"
+        verbose_name_plural = "Cars"
+
     def __str__(self):
-        return f"{self.license_plate} ({self.client})"
+        return f"{self.license_plate}"
 
 
 class Order(models.Model):
@@ -44,14 +53,22 @@ class Order(models.Model):
         help_text='Order Status',
     )
 
+    class Meta:
+        verbose_name = "Order"
+        verbose_name_plural = "Orders"
+
     def __str__(self):
         return f"(Order ID: {self.id}) FOR (License Plate: {self.car_id.license_plate}) ON ({self.date})"
 
 
 class Service(models.Model):
-    """Model representing a car."""
+    """Model representing a service."""
     name = models.CharField('Service Name', max_length=100, help_text='Enter the service provided', null=False)
     price = models.IntegerField('Price', help_text='Enter the price of the service', null=False)
+
+    class Meta:
+        verbose_name = "Service"
+        verbose_name_plural = "Services"
 
     def __str__(self):
         return f"{self.name} {self.price}"
@@ -62,6 +79,10 @@ class OrderService(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
     service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True)
     quantity = models.PositiveIntegerField(default=1, null=False)
+
+    class Meta:
+        verbose_name = "Order Service"
+        verbose_name_plural = "Order Services"
 
     def __str__(self):
         return f"(Service: {self.service.name}) FOR (Order ID: {self.order.id} FOR (Total Price: {self.service.price * self.quantity}EUR)"
