@@ -10,6 +10,7 @@ class OrderServiceInline(admin.TabularInline):
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'date', 'status', 'car_id', 'car_brand', 'car_model')
+    list_filter = ('date', 'status')
     inlines = [OrderServiceInline]
 
     def car_brand(self, obj):
