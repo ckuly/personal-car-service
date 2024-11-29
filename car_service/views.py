@@ -7,10 +7,6 @@ from .models import CarModel, Car, Order, Service, OrderService
 
 
 def index(request):
-    return HttpResponse("Labas, vanagas!")
-
-
-def index(request):
     num_cars = Car.objects.all().count()
     num_services = Service.objects.all().count()
     num_orders_completed = Order.objects.filter(status__exact='d').count()
