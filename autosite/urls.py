@@ -24,5 +24,5 @@ urlpatterns = [
     path('car_service/', include('car_service.urls')),
     path('index2/', include('index2.urls')),
     path('admin/', admin.site.urls),
-path('', RedirectView.as_view(url='car_service/', permanent=True)),
+    path('', RedirectView.as_view(url='car_service/', permanent=True)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
