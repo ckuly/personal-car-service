@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Order List</h1>
+  {% if order_list %}
+  <ul>
+    {% for order in order_list %}
+      <li>
+        <a href="{% url 'order-detail' order.id %}">{{ order.date }}</a> ({{order.car_id}})
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>No cars in dealership.</p>
+  {% endif %}
+{% endblock %}

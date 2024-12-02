@@ -23,6 +23,8 @@ class Car(models.Model):
     vin_code = models.CharField('VIN Code', max_length=17, help_text='Enter the VIN code (example: 4Y1SL65848Z411439)',
                                 null=False)
     client = models.CharField('Client', max_length=100, null=False)
+    description = models.TextField('Description', max_length=2000, default='')
+
 
     class Meta:
         verbose_name = "Car"

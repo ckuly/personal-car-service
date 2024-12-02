@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container car">
+    <h4>{{ car.car_model_id }} {{ car.license_plate }}</h4>
+    <hr/>
+    <p>{{ car.description }}</p>
+
+    <ul>
+        <li>Car Owner: {{ car.client }}</li>
+        <li>Car Model: {{ car.car_model_id }}</li>
+        <li>License Plate: {{ car.license_plate }}</li>
+        <li>VIN CODE: {{ car.vin_code }}</li>
+    </ul>
+
+    {% if car.cars.exists %}
+    <h5>Related Cars:</h5>
+    <ul>
+        {% for related_car in car.cars.all %}
+        <li>{{ related_car.car_model_id }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+{% endblock %}
