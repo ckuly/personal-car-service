@@ -25,6 +25,8 @@ class Car(models.Model):
     client = models.CharField('Client', max_length=100, null=False)
     description = models.TextField('Description', max_length=2000, default='')
 
+    picture = models.ImageField('Picture', upload_to='pictures', null=True)
+
 
     class Meta:
         verbose_name = "Car"
