@@ -1,11 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% load static %}
 <h1>Cars</h1>
 <p>Our car list</p>
-{% for car in cars %}
-<li><a href="{% url 'car' car.id %}">{{car.car_model_id}} {{car.license_plate}}</a></li>
-{% endfor %}
+<div class="row">
+    {% for car in cars %}
+    <div class="col-md-4 d-flex align-items-stretch">
+        <div class="card mb-4 shadow-sm">
+            {% if car.picture %}
+                <img src="{{ car.picture.url }}" class="card-img-top" alt="Car image">
+            {% else %}
+                <img src="{% static 'img/no-image.jpg' %}" class="card-img-top" alt="No image available">
+            {% endif %}
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">{{ car.client }}</h6>
+                <p class="card-text">
+                    <a href="{% url 'car' car.id %}">{{ car.car_model_id }} {{ car.license_plate }}</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 <div class="container puslapiai">
     <nav aria-label="...">
         {% if cars.has_other_pages %}
