@@ -18,7 +18,7 @@
 
     {% for service in order.orderservice_set.all %}
       <hr>
-      <p><strong>Service:</strong> {{ service.service.name }}</p>
+      <p><strong>Service:</strong> {{ service.name }}</p>
       <p><strong>Cost (per serv.):</strong> {{ service.service.price }} EUR</p>
       <p><strong>Quantity:</strong> {{ service.quantity }}</p>
       <p><strong>Total Price:</strong> {{ service.total_price }} EUR</p>
