@@ -4,6 +4,7 @@
 <div class="container car">
     <h4>{{ car.car_model_id }} {{ car.license_plate }}</h4>
     <hr/>
+    <img src="{{ car.picture.url }}" style="margin-bottom: 20px; width: 800px; height: 500px; object-fit: cover;">
     <p>{{ car.description }}</p>
 
     <ul>
