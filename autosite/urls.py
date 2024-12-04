@@ -24,5 +24,6 @@ urlpatterns = [
     path('car_service/', include('car_service.urls')),
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url='car_service/', permanent=True)),
+    path('accounts/', include('django.contrib.auth.urls')),
 ] + (static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) +
     static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
