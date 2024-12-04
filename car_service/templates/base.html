@@ -34,7 +34,7 @@
                           clip-rule="evenodd"/>
                 </svg>
                 {{ user.get_username }}</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Mano knygos</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">My Cars</a></li>
             <li class="nav-item">
                 <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
@@ -42,12 +42,12 @@
                 </form>
             </li>
             {% else %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'login'%}">Prisijungti</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Registruotis</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'login'%}">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Register</a></li>
             {% endif %}
         </ul>
         <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="get">
-            <input class="form-control me-2" name="query" class="form-control" type="text" placeholder="Paieška">
+            <input class="form-control me-2" name="query" class="form-control" type="text" placeholder="Search Term">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
     </div>
