@@ -1,6 +1,8 @@
 from django.db import models
 import uuid
-
+from django.contrib.auth.models import User
+from datetime import date
+from tinymce.models import HTMLField
 
 class CarModel(models.Model):
     """Model representing a car's model."""
@@ -23,7 +25,7 @@ class Car(models.Model):
     vin_code = models.CharField('VIN Code', max_length=17, help_text='Enter the VIN code (example: 4Y1SL65848Z411439)',
                                 null=False)
     client = models.CharField('Client', max_length=100, null=False)
-    description = models.TextField('Description', max_length=2000, default='')
+    description = HTMLField()
 
     picture = models.ImageField('Picture', upload_to='pictures', null=True, blank=True)
 
@@ -41,6 +43,13 @@ class Order(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID Car Order', null=False)
     date = models.DateField('Will be accessible', null=True)
     car_id = models.ForeignKey('Car', on_delete=models.CASCADE, null=True)
+    client = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
+    @property
+    def is_overdue(self):
+        if self.date and date.today() > self.date:
+            return True
+        return False
 
     LOAN_STATUS = (
         ('p', 'Processing'),

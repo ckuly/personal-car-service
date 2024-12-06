@@ -3,6 +3,7 @@ from .models import Car, Order, Service
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def index(request):
     num_cars = Car.objects.all().count()
@@ -57,3 +58,13 @@ def search(request):
     query = request.GET.get('query')
     search_results = Car.objects.filter(Q(client__icontains=query) | Q(license_plate__icontains=query) | Q(vin_code__icontains=query))
     return render(request, 'search.html', {'cars': search_results, 'query': query})
+
+
+class LoanedCar(LoginRequiredMixin, generic.ListView):
+    model = Order
+    template_name = 'user_cars.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Order.objects.filter(client=self.request.user).order_by('date')
+

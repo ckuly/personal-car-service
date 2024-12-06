@@ -16,7 +16,7 @@
             style="margin-bottom: 20px; width: 800px; height: 500px; object-fit: cover;"
             alt="No image available">
     {% endif %}
-    <p>{{ car.description }}</p>
+    <p>{{ car.description | safe }}</p>
 
     <ul>
         <li>Car Owner: {{ car.client }}</li>

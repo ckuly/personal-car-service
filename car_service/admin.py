@@ -12,11 +12,12 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'date', 'status', 'car_id', 'car_brand', 'car_model')
     list_filter = ('date', 'status')
     list_editable = ('date', 'status')
+    search_fields = ('id', 'car__model')
     inlines = [OrderServiceInline]
 
     fieldsets = (
         ('General', {'fields': ('id', 'car_id')}),
-        ('Availability', {'fields': ('status', 'date')}),
+        ('Availability', {'fields': ('status', 'date', 'client')}),
     )
 
 

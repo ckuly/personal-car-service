@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>My Car Orders</h1>
+
+{% if order_list %}
+<ul>
+
+    {% for ord in order_list %}
+    <li class="{% if ord.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'order-detail' ord.id %}">{{ ord.car_id.car_model_id.model }}</a> ({{ ord.date }})
+    </li>
+    {% endfor %}
+</ul>
+
+{% else %}
+<p>You don't have any order's.</p>
+{% endif %}
+{% endblock %}
