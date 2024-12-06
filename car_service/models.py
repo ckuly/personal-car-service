@@ -114,3 +114,15 @@ class OrderService(models.Model):
 
     def __str__(self):
         return f"{self.service.name} {self.order.id}"
+
+
+class CarReview(models.Model):
+    car = models.ForeignKey('Car', on_delete=models.SET_NULL, null=True, blank=True)
+    reviewer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    content = models.TextField('Review', max_length=2000)
+
+    class Meta:
+        verbose_name = "Review"
+        verbose_name_plural = 'Reviews'
+        ordering = ['-date_created']
