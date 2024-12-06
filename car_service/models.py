@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from datetime import date
 from tinymce.models import HTMLField
 
+
 class CarModel(models.Model):
     """Model representing a car's model."""
     brand = models.CharField('Brand', max_length=100, null=False)
@@ -116,8 +117,8 @@ class OrderService(models.Model):
         return f"{self.service.name} {self.order.id}"
 
 
-class CarReview(models.Model):
-    car = models.ForeignKey('Car', on_delete=models.SET_NULL, null=True, blank=True)
+class OrderReview(models.Model):
+    order = models.ForeignKey('Order', on_delete=models.SET_NULL, null=True, blank=True)
     reviewer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     content = models.TextField('Review', max_length=2000)

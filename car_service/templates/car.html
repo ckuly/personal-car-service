@@ -34,14 +34,4 @@
     </ul>
     {% endif %}
 </div>
-  <h4>Reviews:</h4>
-  {% if car.carreview_set.all %}
-    {% for review in car.carreview_set.all %}
-      <hr>
-      <strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created}}</em>
-      <p>{{ review.content }}</p>
-    {% endfor %}
-  {% else %}
-    <p>Car doesn't have any reviews.</p>
-  {% endif %}
 {% endblock %}

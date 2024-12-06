@@ -1,29 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Order Details</h1>
+<h1>Order Details</h1>
 
-  <p><strong>Order ID:</strong> {{ order.id }}</p>
-  <p><strong>Date:</strong> {{ order.date }}</p>
-  <p><strong>Car:</strong> {{ order.car_id.license_plate }} ({{ order.car_brand }} {{ order.car_model }})</p>
-  <p>
+<p><strong>Order ID:</strong> {{ order.id }}</p>
+<p><strong>Date:</strong> {{ order.date }}</p>
+<p><strong>Car:</strong> {{ order.car_id.license_plate }} ({{ order.car_brand }} {{ order.car_model }})</p>
+<p>
     <strong>Status:</strong>
     <span class="{% if order.status == 'p' %}text-warning{% elif order.status == 'd' %}text-success{% elif order.status == 't' %}text-info{% elif order.status == 'r' %}text-danger{% endif %}">
       {{ order.get_status_display }}
     </span>
-  </p>
+</p>
 
-  <div style="margin-left:20px;margin-top:20px">
+<div style="margin-left:20px;margin-top:20px">
     <h4>Services:</h4>
 
     {% for service in order.orderservice_set.all %}
-      <hr>
-      <p><strong>Service:</strong> {{ service.name }}</p>
-      <p><strong>Cost (per serv.):</strong> {{ service.service.price }} EUR</p>
-      <p><strong>Quantity:</strong> {{ service.quantity }}</p>
-      <p><strong>Total Price:</strong> {{ service.total_price }} EUR</p>
+    <hr>
+    <p><strong>Service:</strong> {{ service.name }}</p>
+    <p><strong>Cost (per serv.):</strong> {{ service.service.price }} EUR</p>
+    <p><strong>Quantity:</strong> {{ service.quantity }}</p>
+    <p><strong>Total Price:</strong> {{ service.total_price }} EUR</p>
     {% empty %}
-      <p class="text-warning">This order doesn't have any services.</p>
+    <p class="text-warning">This order doesn't have any services.</p>
     {% endfor %}
-  </div>
+</div>
+<h4>Reviews:</h4>
+{% if order.reviews.all %}
+    {% for review in order.reviews.all %}
+        <hr>
+        <strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created }}</em>
+        <p>{{ review.content }}</p>
+    {% endfor %}
+{% else %}
+    <p>Order doesn't have any reviews.</p>
+{% endif %}
 {% endblock %}
