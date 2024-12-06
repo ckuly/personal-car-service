@@ -26,14 +26,15 @@
     <p class="text-warning">This order doesn't have any services.</p>
     {% endfor %}
 </div>
-<h4>Reviews:</h4>
-{% if order.reviews.all %}
-    {% for review in order.reviews.all %}
-        <hr>
-        <strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created }}</em>
-        <p>{{ review.content }}</p>
+</br>
+  <h4>Reviews:</h4>
+  {% if order.orderreview_set.all %}
+    {% for review in order.orderreview_set.all %}
+      <hr>
+      <strong>{{ review.reviewer }}</strong>, <em>{{ review.date_created}}</em>
+      <p>{{ review.content }}</p>
     {% endfor %}
-{% else %}
+  {% else %}
     <p>Order doesn't have any reviews.</p>
-{% endif %}
+  {% endif %}
 {% endblock %}
