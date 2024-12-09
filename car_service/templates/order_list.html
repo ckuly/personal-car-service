@@ -16,8 +16,8 @@
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; pirmas</a>
-            <a href="?page={{ page_obj.previous_page_number }}">atgal</a>
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">back</a>
         {% endif %}
 
         <span class="current">
@@ -25,8 +25,8 @@
         </span>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">pirmyn</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">paskutinis &raquo;</a>
+            <a href="?page={{ page_obj.next_page_number }}">forward</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
 </div>
