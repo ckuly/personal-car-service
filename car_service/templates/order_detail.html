@@ -26,7 +26,6 @@
     <p class="text-warning">This order doesn't have any services.</p>
     {% endfor %}
 </div>
-</br>
 <h4>Reviews:</h4>
 {% if order.orderreview_set.all %}
 {% for review in order.orderreview_set.all %}
@@ -42,11 +41,11 @@
 <div class="fieldWrapper">
     <hr>
     <br/>
-    <h4>Palikite atsiliepimą:</h4>
+    <h4>Leave a comment:</h4>
     <form action="" method="post">
         {% csrf_token %}
-        {{ form.content }}</br>
-        <input type="submit" value="Išsaugoti">
+        {{ form.content }}
+        <input type="submit" value="Save">
     </form>
 </div>
 {% endif %}
