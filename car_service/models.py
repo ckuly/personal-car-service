@@ -28,7 +28,6 @@ class Car(models.Model):
                                 null=False)
     client = models.CharField('Client', max_length=100, null=False)
     description = HTMLField()
-
     picture = models.ImageField('Picture', upload_to='pictures', null=True, blank=True)
 
     class Meta:
@@ -37,6 +36,14 @@ class Car(models.Model):
 
     def __str__(self):
         return f"{self.license_plate}"
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        img = Image.open(self.picture.path)
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.picture.path)
 
 
 class Order(models.Model):

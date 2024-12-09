@@ -5,15 +5,19 @@
 
 {% if order_list %}
 <ul>
-    <img class="rounded-circle" src="{{ord.reader.profile.picture.url}}">
     {% for ord in order_list %}
     <li class="{% if ord.is_overdue %}text-danger{% endif %}">
+        {% if ord.car_id.picture %}
+        <img class="rounded-circle account-img" src="{{ ord.car_id.picture.url }}" alt="Car image">
+        {% else %}
+        <span>No picture</span>
+        {% endif %}
         <a href="{% url 'order-detail' ord.id %}">{{ ord.car_id.car_model_id.model }}</a> ({{ ord.date }})
     </li>
     {% endfor %}
 </ul>
 
 {% else %}
-<p>You don't have any order's.</p>
+<p>You don't have any orders.</p>
 {% endif %}
 {% endblock %}
