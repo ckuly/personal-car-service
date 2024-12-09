@@ -3,3 +3,17 @@
     padding: 0;
     list-style: none;
 }
+
+.small-card {
+    transform: scale(0.9); /* Shrinks the card to 90% of its original size */
+    transition: transform 0.3s ease-in-out; /* Smooth transition */
+}
+
+.small-card:hover {
+    transform: scale(1); /* Restores the original size on hover */
+}
+
+.card-img-top {
+    height: 150px; /* Reduce image height */
+    object-fit: cover; /* Keeps the image aspect ratio */
+}

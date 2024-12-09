@@ -31,7 +31,7 @@ def index(request):
 
 
 def cars(request):
-    paginator = Paginator(Car.objects.all(), 3)
+    paginator = Paginator(Car.objects.all(), 8)
     page_number = request.GET.get('page')
     cars = paginator.get_page(page_number)
     context = {
