@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from .forms import OrderReviewForm
 from django.views.generic.edit import FormMixin
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     num_cars = Car.objects.all().count()
@@ -55,11 +56,9 @@ class OrderDetailView(FormMixin, generic.DetailView):
     template_name = 'order_detail.html'
     form_class = OrderReviewForm
 
-    # nurodome, kur atsidursime komentaro sėkmės atveju.
     def get_success_url(self):
         return reverse('order-detail', kwargs={'pk': self.object.id})
 
-    # standartinis post metodo perrašymas, naudojant FormMixin, galite kopijuoti tiesiai į savo projektą.
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = self.get_form()
@@ -68,7 +67,6 @@ class OrderDetailView(FormMixin, generic.DetailView):
         else:
             return self.form_invalid(form)
 
-    # štai čia nurodome, kad knyga bus būtent ta, po kuria komentuojame, o vartotojas bus tas, kuris yra prisijungęs.
     def form_valid(self, form):
         form.instance.order = self.object
         form.instance.reviewer = self.request.user
@@ -98,24 +96,19 @@ class LoanedCar(LoginRequiredMixin, generic.ListView):
 @csrf_protect
 def register(request):
     if request.method == "POST":
-        # pasiimame reikšmes iš registracijos formos
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
         password2 = request.POST['password2']
-        # tikriname, ar sutampa slaptažodžiai
         if password == password2:
-            # tikriname, ar neužimtas username
             if User.objects.filter(username=username).exists():
                 messages.error(request, f'Vartotojo vardas {username} užimtas!')
                 return redirect('register')
             else:
-                # tikriname, ar nėra tokio pat email
                 if User.objects.filter(email=email).exists():
                     messages.error(request, f'Vartotojas su el. paštu {email} jau užregistruotas!')
                     return redirect('register')
                 else:
-                    # jeigu viskas tvarkoje, sukuriame naują vartotoją
                     User.objects.create_user(username=username, email=email, password=password)
                     messages.info(request, f'Vartotojas {username} užregistruotas!')
                     return redirect('login')
@@ -123,3 +116,25 @@ def register(request):
             messages.error(request, 'Slaptažodžiai nesutampa!')
             return redirect('register')
     return render(request, 'register.html')
+
+from .forms import OrderReviewForm, UserUpdateForm, ProfileUpdateForm
+
+@login_required
+def profile(request):
+    if request.method == "POST":
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f"Profilis atnaujintas")
+            return redirect('profile')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+
+    context = {
+        'u_form': u_form,
+        'p_form': p_form,
+    }
+    return render(request, 'profile.html', context)
