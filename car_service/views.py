@@ -8,9 +8,10 @@ from django.shortcuts import redirect
 from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
-from .forms import OrderReviewForm
+from .forms import OrderReviewForm, UserUpdateForm, ProfileUpdateForm
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.decorators import login_required
+
 
 def index(request):
     num_cars = Car.objects.all().count()
@@ -28,6 +29,7 @@ def index(request):
 
     return render(request, 'index.html', context=context)
 
+
 def cars(request):
     paginator = Paginator(Car.objects.all(), 3)
     page_number = request.GET.get('page')
@@ -42,6 +44,7 @@ def car(request, car_id):
     single_car = get_object_or_404(Car, pk=car_id)
     return render(request, 'car.html', {'car': single_car})
 
+
 class OrderListView(generic.ListView):
     model = Order
     template_name = 'order_list.html'
@@ -50,6 +53,7 @@ class OrderListView(generic.ListView):
 
     def get_queryset(self):
         return Order.objects.all().order_by('-date')
+
 
 class OrderDetailView(FormMixin, generic.DetailView):
     model = Order
@@ -73,6 +77,7 @@ class OrderDetailView(FormMixin, generic.DetailView):
         form.save()
         return super(OrderDetailView, self).form_valid(form)
 
+
 def search(request):
     """
     paprasta paieška. query ima informaciją iš paieškos laukelio,
@@ -81,7 +86,8 @@ def search(request):
     didžiosios/mažosios.
     """
     query = request.GET.get('query')
-    search_results = Car.objects.filter(Q(client__icontains=query) | Q(license_plate__icontains=query) | Q(vin_code__icontains=query))
+    search_results = Car.objects.filter(
+        Q(client__icontains=query) | Q(license_plate__icontains=query) | Q(vin_code__icontains=query))
     return render(request, 'search.html', {'cars': search_results, 'query': query})
 
 
@@ -92,6 +98,7 @@ class LoanedCar(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Order.objects.filter(client=self.request.user).order_by('date')
+
 
 @csrf_protect
 def register(request):
@@ -117,7 +124,6 @@ def register(request):
             return redirect('register')
     return render(request, 'register.html')
 
-from .forms import OrderReviewForm, UserUpdateForm, ProfileUpdateForm
 
 @login_required
 def profile(request):

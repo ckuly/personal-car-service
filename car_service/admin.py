@@ -42,8 +42,10 @@ class OrderServiceAdmin(admin.ModelAdmin):
     list_display = ('order', 'service', 'quantity', 'total_price')
     list_editable = ('service', 'quantity')
 
+
 class OrderReviewAdmin(admin.ModelAdmin):
     list_display = ('order', 'date_created', 'reviewer', 'content')
+
 
 admin.site.register(OrderReview, OrderReviewAdmin)
 admin.site.register(Car, CarAdmin)

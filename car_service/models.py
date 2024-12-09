@@ -3,6 +3,7 @@ import uuid
 from django.contrib.auth.models import User
 from datetime import date
 from tinymce.models import HTMLField
+from PIL import Image
 
 
 class CarModel(models.Model):
@@ -29,7 +30,6 @@ class Car(models.Model):
     description = HTMLField()
 
     picture = models.ImageField('Picture', upload_to='pictures', null=True, blank=True)
-
 
     class Meta:
         verbose_name = "Car"
@@ -128,7 +128,6 @@ class OrderReview(models.Model):
         verbose_name_plural = 'Reviews'
         ordering = ['-date_created']
 
-from PIL import Image
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

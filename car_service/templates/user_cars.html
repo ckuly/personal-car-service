@@ -5,9 +5,8 @@
 
 {% if order_list %}
 <ul>
-
-    {% for ord in order_list %}
     <img class="rounded-circle" src="{{ord.reader.profile.picture.url}}">
+    {% for ord in order_list %}
     <li class="{% if ord.is_overdue %}text-danger{% endif %}">
         <a href="{% url 'order-detail' ord.id %}">{{ ord.car_id.car_model_id.model }}</a> ({{ ord.date }})
     </li>
