@@ -11,6 +11,7 @@ from django.contrib import messages
 from .forms import OrderReviewForm, UserUpdateForm, ProfileUpdateForm
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView
 
 
 def index(request):
@@ -133,7 +134,7 @@ def profile(request):
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            messages.success(request, f"Profilis atnaujintas")
+            messages.success(request, f"Profile Updated")
             return redirect('profile')
     else:
         u_form = UserUpdateForm(instance=request.user)
@@ -144,3 +145,13 @@ def profile(request):
         'p_form': p_form,
     }
     return render(request, 'profile.html', context)
+
+class OrderServicesByUserListView(LoginRequiredMixin, ListView):
+    model = Order
+    context_object_name = 'orders'
+    template_name = 'user_orders.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Order.objects.filter(client=self.request.user).order_by('date')
+

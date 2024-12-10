@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>My ordered services</h1>
+    {% if books %}
+        {% for order in orders %}
+    <hr>
+        <ul>
+
+        <img class="rounded-circle" src="{{ user.profile.picture.url }}">
+        <li><strong class="{% if order.date %}text-danger{% endif %}">Name: {{order.car_id.car_model_id.model}}</strong></li>
+        <li><strong>Gražinimo terminas:</strong> {{order.date}}</li>
+        <br/>
+        <a class="btn btn-primary" href="{{ order.pk }}" role="button">Peržiūrėti</a>
+      </li>
+
+    </ul>
+{% endfor %}
+    {% else %}
+      <p>There are no services ordered.</p>
+    {% endif %}
+{% endblock %}

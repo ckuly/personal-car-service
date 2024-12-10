@@ -11,4 +11,5 @@ urlpatterns = [
     path('mycars/', views.LoanedCar.as_view(), name='my-cars'),
     path('register/', views.register, name='register'),
     path('profile/', views.profile, name='profile'),
+    path('myorders/', views.OrderServicesByUserListView.as_view(), name='my-ordered'),
 ]
