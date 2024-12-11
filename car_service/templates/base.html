@@ -49,6 +49,20 @@
             {% endif %}
             {% endif %}
         </ul>
+        {% load i18n %}
+        <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}"/>
+            <select name="language" onchange="this.form.submit()">
+                {% get_current_language as LANGUAGE_CODE %}
+                {% get_available_languages as LANGUAGES %}
+                {% for lang in LANGUAGES %}
+                <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected" {% endif %}>
+                    {{ lang.1 }}
+                </option>
+                {% endfor %}
+            </select>
+        </form>
         <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="get">
             <input class="form-control me-2" name="query" class="form-control" type="text" placeholder="Search Term">
             <button class="btn btn-outline-success" type="submit">Search</button>
@@ -69,5 +83,3 @@
 </div>
 </body>
 </html>
-
-

@@ -13,6 +13,7 @@ from django.views.generic.edit import FormMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.utils.translation import gettext_lazy as _
 
 
 def index(request):
@@ -111,18 +112,18 @@ def register(request):
         password2 = request.POST['password2']
         if password == password2:
             if User.objects.filter(username=username).exists():
-                messages.error(request, f'Vartotojo vardas {username} užimtas!')
+                messages.error(request, _(f'Username "{username}" is already taken!'))
                 return redirect('register')
             else:
                 if User.objects.filter(email=email).exists():
-                    messages.error(request, f'Vartotojas su el. paštu {email} jau užregistruotas!')
+                    messages.error(request, _(f'A user with email "{email}" is already registered!'))
                     return redirect('register')
                 else:
                     User.objects.create_user(username=username, email=email, password=password)
-                    messages.info(request, f'Vartotojas {username} užregistruotas!')
+                    messages.info(request, _(f'User "{username}" has been registered!'))
                     return redirect('login')
         else:
-            messages.error(request, 'Slaptažodžiai nesutampa!')
+            messages.error(request, _('Passwords do not match!'))
             return redirect('register')
     return render(request, 'register.html')
 
