@@ -12,4 +12,5 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('profile/', views.profile, name='profile'),
     path('myorders/', views.OrderServicesByUserListView.as_view(), name='my-ordered'),
+    path('myorders/<uuid:pk>', views.OrderByUserDetailView.as_view(), name='my-book'),
 ]

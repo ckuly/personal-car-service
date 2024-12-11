@@ -12,6 +12,7 @@ from .forms import OrderReviewForm, UserUpdateForm, ProfileUpdateForm
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView
+from django.views.generic import DetailView
 
 
 def index(request):
@@ -155,3 +156,7 @@ class OrderServicesByUserListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Order.objects.filter(client=self.request.user).order_by('date')
 
+
+class OrderByUserDetailView(LoginRequiredMixin, DetailView):
+    model = Order
+    template_name = 'user_order.html'
