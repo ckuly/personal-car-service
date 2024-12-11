@@ -11,7 +11,7 @@
     <li><strong class="{% if order.is_overdue %}text-danger{% endif %}">Name: {{ order.car_id.car_model_id.brand }} {{ order.car_id.car_model_id.model }}</strong></li>
     <li><strong>Return Date:</strong> {{ order.date }}</li>
     <br/>
-    <a class="btn btn-primary" href="{% url 'my-book' order.pk %}" role="button">View</a>
+    <a class="btn btn-primary" href="{% url 'my-order' order.pk %}" role="button">View</a>
 </ul>
 {% endfor %}
 {% else %}

@@ -25,7 +25,13 @@
         <h2>Order Details</h2>
         <p><strong>Status:</strong> {{ object.get_status_display }}</p>
         <p><strong>Return Date:</strong> {{ object.date }}</p>
+        <p><strong>Due Back:</strong> {{ object.due_back }}</p>
         <p><strong>Overdue:</strong> {% if object.is_overdue %}<span class="text-danger">Yes</span>{% else %}No{% endif %}</p>
+        {% if object.client == user %}
+        <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'my-order-update' object.id %}">Edit</a>
+        </div>
+        {% endif %}
     </div>
     <hr>
     <div>

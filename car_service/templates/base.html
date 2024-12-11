@@ -17,6 +17,7 @@
     <div class="container-fluid">
         <a class="navbar-brand">Car service</a>
         <ul class="navbar-nav mx-2">
+            <li class="nav-item"><a class="nav-link" href="{% url 'my-ordered-new'%}?next=/car_service">New</a></li>
             <li class="nav-item active"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
             <li class="nav-item active"><a class="nav-link" href="{% url 'orders' %}">All Services</a></li>
             <li class="nav-item active"><a class="nav-link" href="{% url 'cars' %}">All Cars</a></li>

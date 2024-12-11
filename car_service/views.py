@@ -11,8 +11,8 @@ from django.contrib import messages
 from .forms import OrderReviewForm, UserUpdateForm, ProfileUpdateForm
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView
-from django.views.generic import DetailView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 
 def index(request):
@@ -160,3 +160,27 @@ class OrderServicesByUserListView(LoginRequiredMixin, ListView):
 class OrderByUserDetailView(LoginRequiredMixin, DetailView):
     model = Order
     template_name = 'user_order.html'
+
+class OrderByUserCreateView(LoginRequiredMixin, CreateView):
+    model = Order
+    fields = ['car_id', 'date']
+    success_url = "/car_service/myorders/"
+    template_name = 'user_order_form.html'
+
+    def form_valid(self, form):
+        form.instance.client = self.request.user
+        return super().form_valid(form)
+
+class OrderByUserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Order
+    fields = ['car_id', 'date']
+    success_url = "/car_service/myorders/"
+    template_name = 'user_order_form.html'
+
+    def form_valid(self, form):
+        form.instance.client = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        car_id = self.get_object()
+        return self.request.user == car_id.client
