@@ -1,75 +1,78 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Order Details</h1>
-    <hr>
+<h1>Order Details</h1>
+<hr>
+<div>
+    <h2>Client Information</h2>
+    <img class="rounded-circle" src="{{ object.client.profile.picture.url }}" alt="Profile Picture" width="150"
+         height="150">
+    <p><strong>Username:</strong> {{ object.client.username }}</p>
+    <p><strong>Email:</strong> {{ object.client.email }}</p>
+</div>
+<hr>
+<div>
+    <h2>Car Information</h2>
+    <p><strong>License Plate:</strong> {{ object.car_id.license_plate }}</p>
+    <p><strong>Car Brand:</strong> {{ object.car_id.car_model_id.brand }}</p>
+    <p><strong>Car Model:</strong> {{ object.car_id.car_model_id.model }}</p>
+    <p><strong>VIN Code:</strong> {{ object.car_id.vin_code }}</p>
+    {% if object.car_id.picture %}
+    <img src="{{ object.car_id.picture.url }}" alt="Car Picture" width="300">
+    {% endif %}
+</div>
+<hr>
+<div>
+    <h2>Order Details</h2>
+    <p><strong>Status:</strong> {{ object.get_status_display }}</p>
+    <p><strong>Return Date:</strong> {{ object.date }}</p>
+    <p><strong>Due Back:</strong> {{ object.due_back }}</p>
+    <p><strong>Overdue:</strong> {% if object.is_overdue %}<span class="text-danger">Yes</span>{% else %}No{% endif %}
+    </p>
+    {% if object.client == user %}
     <div>
-        <h2>Client Information</h2>
-        <img class="rounded-circle" src="{{ object.client.profile.picture.url }}" alt="Profile Picture" width="150" height="150">
-        <p><strong>Username:</strong> {{ object.client.username }}</p>
-        <p><strong>Email:</strong> {{ object.client.email }}</p>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'my-order-update' object.id %}">Edit</a>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'my-order-delete' object.id %}">Delete</a>
     </div>
-    <hr>
-    <div>
-        <h2>Car Information</h2>
-        <p><strong>License Plate:</strong> {{ object.car_id.license_plate }}</p>
-        <p><strong>Car Brand:</strong> {{ object.car_id.car_model_id.brand }}</p>
-        <p><strong>Car Model:</strong> {{ object.car_id.car_model_id.model }}</p>
-        <p><strong>VIN Code:</strong> {{ object.car_id.vin_code }}</p>
-        {% if object.car_id.picture %}
-        <img src="{{ object.car_id.picture.url }}" alt="Car Picture" width="300">
-        {% endif %}
-    </div>
-    <hr>
-    <div>
-        <h2>Order Details</h2>
-        <p><strong>Status:</strong> {{ object.get_status_display }}</p>
-        <p><strong>Return Date:</strong> {{ object.date }}</p>
-        <p><strong>Due Back:</strong> {{ object.due_back }}</p>
-        <p><strong>Overdue:</strong> {% if object.is_overdue %}<span class="text-danger">Yes</span>{% else %}No{% endif %}</p>
-        {% if object.client == user %}
-        <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'my-order-update' object.id %}">Edit</a>
-        </div>
-        {% endif %}
-    </div>
-    <hr>
-    <div>
-        <h2>Services Included</h2>
-        {% if object.orderservice_set.all %}
-        <ul>
-            {% for service in object.orderservice_set.all %}
-            <li>
-                <strong>Service Name:</strong> {{ service.service.name }} <br>
-                <strong>Price:</strong> €{{ service.service.price }} <br>
-                <strong>Quantity:</strong> {{ service.quantity }} <br>
-                <strong>Total Price:</strong> €{{ service.total_price }}
-            </li>
-            <hr>
-            {% endfor %}
-        </ul>
-        {% else %}
-        <p>No services included in this order.</p>
-        {% endif %}
-    </div>
-    <hr>
-    <div>
-        <h2>Order Review</h2>
-        {% if object.orderreview_set.all %}
-        <ul>
-            {% for review in object.orderreview_set.all %}
-            <li>
-                <strong>Reviewer:</strong> {{ review.reviewer.username }} <br>
-                <strong>Date:</strong> {{ review.date_created|date:"F j, Y, g:i a" }} <br>
-                <p>{{ review.content }}</p>
-            </li>
-            <hr>
-            {% endfor %}
-        </ul>
-        {% else %}
-        <p>No reviews for this order yet.</p>
-        {% endif %}
-    </div>
-    <hr>
-    <a class="btn btn-primary" href="{% url 'my-ordered' %}" role="button">Back to My Orders</a>
+    {% endif %}
+</div>
+<hr>
+<div>
+    <h2>Services Included</h2>
+    {% if object.orderservice_set.all %}
+    <ul>
+        {% for service in object.orderservice_set.all %}
+        <li>
+            <strong>Service Name:</strong> {{ service.service.name }} <br>
+            <strong>Price:</strong> €{{ service.service.price }} <br>
+            <strong>Quantity:</strong> {{ service.quantity }} <br>
+            <strong>Total Price:</strong> €{{ service.total_price }}
+        </li>
+        <hr>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No services included in this order.</p>
+    {% endif %}
+</div>
+<hr>
+<div>
+    <h2>Order Review</h2>
+    {% if object.orderreview_set.all %}
+    <ul>
+        {% for review in object.orderreview_set.all %}
+        <li>
+            <strong>Reviewer:</strong> {{ review.reviewer.username }} <br>
+            <strong>Date:</strong> {{ review.date_created|date:"F j, Y, g:i a" }} <br>
+            <p>{{ review.content }}</p>
+        </li>
+        <hr>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No reviews for this order yet.</p>
+    {% endif %}
+</div>
+<hr>
+<a class="btn btn-primary" href="{% url 'my-ordered' %}" role="button">Back to My Orders</a>
 {% endblock %}
