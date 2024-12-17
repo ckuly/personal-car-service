@@ -95,10 +95,5 @@ This is an open-source Django-based library designed to manage and streamline ca
 ### 🤝 **CONTRIBUTING**  
 Contributions are welcome! Feel free to submit a pull request or report an issue.  
 
----
-
-### 📞 **CONTACT US**  
-If you have any questions or suggestions, reach out to us at [support@owletgroup.com](mailto:support@owletgroup.com).  
-
 [![GitHub Stars](https://img.shields.io/github/stars/ckuly/personal-car-service)](https://github.com/ckuly/personal-car-service)  
 [![Follow Us](https://img.shields.io/twitter/follow/kyukarago?style=social)](https://twitter.com/kyukarago)
