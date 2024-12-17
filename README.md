@@ -1,7 +1,7 @@
 ### **CAR SERVICE LIBRARY by ckul**
 This is an open-source Django-based library designed to manage and streamline car service operations. It includes functionalities for managing car service records, scheduling maintenance, tracking repairs, and maintaining a comprehensive history of vehicle services. The system allows for efficient management of service appointments, invoicing, and customer interactions, providing a user-friendly interface for both service providers and customers.
 
-[![Join Our Discord](https://img.shields.io/badge/Join%20Our%20Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/mXkkp4JaCe)
+[![Join Our Discord](https://img.shields.io/badge/Join%20Our%20Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/)
 
 ---
 
