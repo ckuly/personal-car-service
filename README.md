@@ -1,6 +1,3 @@
-Here's a template `README.md` for your Django-based car service project:
-
-```markdown
 ### **CAR SERVICE LIBRARY by ckul**
 This is an open-source Django-based library designed to manage and streamline car service operations. It includes functionalities for managing car service records, scheduling maintenance, tracking repairs, and maintaining a comprehensive history of vehicle services. The system allows for efficient management of service appointments, invoicing, and customer interactions, providing a user-friendly interface for both service providers and customers.
 
